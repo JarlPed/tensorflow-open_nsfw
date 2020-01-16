@@ -1,6 +1,6 @@
 import math
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from enum import Enum, unique
 
 
@@ -27,13 +27,11 @@ class OpenNsfwModel:
     def build(self, weights_path="open_nsfw-weights.npy",
               input_type=InputType.TENSOR):
 
-        self.weights = np.load(weights_path, encoding="latin1").item()
+        self.weights = np.load(weights_path, encoding="latin1", allow_pickle=True).item()
         self.input_tensor = None
 
         if input_type == InputType.TENSOR:
-            self.input = tf.placeholder(tf.float32,
-                                        shape=[None, 224, 224, 3],
-                                        name="input")
+            self.input = tf.placeholder(tf.float32, shape=[None, 224, 224, 3], name="input")
             self.input_tensor = self.input
         elif input_type == InputType.BASE64_JPEG:
             from image_utils import load_base64_tensor

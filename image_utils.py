@@ -68,7 +68,7 @@ def create_tensorflow_image_loader(session, expand_dims=True,
         * https://github.com/tensorflow/tensorflow/issues/6720
         * https://github.com/tensorflow/tensorflow/issues/12753
     """
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
 
     def load_image(image_path):
         image = tf.read_file(image_path)
@@ -88,7 +88,7 @@ def create_tensorflow_image_loader(session, expand_dims=True,
 
 
 def load_base64_tensor(_input):
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
 
     def decode_and_process(base64):
         _bytes = tf.decode_base64(base64)

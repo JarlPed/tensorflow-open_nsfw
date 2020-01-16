@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import argparse
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from model import OpenNsfwModel, InputType
 from image_utils import create_tensorflow_image_loader
@@ -58,9 +58,7 @@ def main(argv):
 
         image = fn_load_image(args.input_file)
 
-        predictions = \
-            sess.run(model.predictions,
-                     feed_dict={model.input: image})
+        predictions = sess.run(model.predictions, feed_dict={model.input: image.astype(np.int32)})
 
         print("Results for '{}'".format(args.input_file))
         print("\tSFW score:\t{}\n\tNSFW score:\t{}".format(*predictions[0]))
